@@ -22,15 +22,13 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesR
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
 
-        // Call getCategories method?
+        // create new request and call getCategories method
         CategoriesRequest request = new CategoriesRequest(this);
         request.getCategories(this);
 
-        // OnClickListener on ListView
+        // Attach OnClickListener on ListView
         list_categories = findViewById(R.id.list_categories);
         list_categories.setOnItemClickListener(new toCategory());
-
-
     }
 
     private class toCategory implements AdapterView.OnItemClickListener{
@@ -38,12 +36,10 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesR
         public void onItemClick(AdapterView<?> adapter, View v, int i, long l){
             // Go to MenuActivity
             String selectedCat = list_categories.getItemAtPosition(i).toString();
-            //Toast.makeText(CategoriesActivity.this, selectedCat, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(CategoriesActivity.this, MenuActivity.class);
             intent.putExtra("category", selectedCat);
             startActivity(intent);
         }
-
     }
 
     @Override
@@ -51,7 +47,7 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesR
         // Create a new ArrayAdapter
         ArrayAdapter<String> categoriesAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,categories);
-
+        // Find view and set the adapter
         list_categories = findViewById(R.id.list_categories);
         list_categories.setAdapter(categoriesAdapter);
     }

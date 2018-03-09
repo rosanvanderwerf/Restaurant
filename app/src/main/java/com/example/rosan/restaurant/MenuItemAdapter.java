@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -27,9 +28,10 @@ import javax.xml.transform.ErrorListener;
 
 public class MenuItemAdapter extends ArrayAdapter<MenuItem> {
 
-    private Context context;
+    public Context context;
     public ArrayList menuItems;
     private int resource;
+
 
     public MenuItemAdapter(Context context, ArrayList<MenuItem> menuItems) {
         super(context, 0, menuItems);
@@ -38,8 +40,8 @@ public class MenuItemAdapter extends ArrayAdapter<MenuItem> {
         this.menuItems = menuItems;
     }
 
-    public TextView title;
-    public TextView price;
+    TextView title;
+    TextView price;
     ImageView image;
 
     @Override
@@ -57,9 +59,15 @@ public class MenuItemAdapter extends ArrayAdapter<MenuItem> {
         // Populate
         assert item != null;
         title.setText(item.getName());
-        price.setText(item.getPrice().toString());
-        //loadImageFromUrl(item.getImageUrl());
+        price.setText("$" + item.getPrice() + ".00");
 
+        // Something to display an image from url - Using Picasso
+        try {
+            URL url = new URL(item.getImageUrl());
+            Picasso.with(getContext()).load(String.valueOf(url)).resize(150,150).centerCrop().into(image);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
         return v;
     }
 }

@@ -49,9 +49,8 @@ public class CategoriesRequest implements Response.Listener<JSONObject>, Respons
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        // Something when all goes to hell
-        // Among other thins: an error message
-        //callback.gotCategoriesError("Something went wrong. Please try again.");
+        // Among other things: an error message
+        cb.gotCategoriesError("Something went wrong. Please try again.");
     }
 
     @Override
@@ -76,7 +75,7 @@ public class CategoriesRequest implements Response.Listener<JSONObject>, Respons
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            //callback.gotCategoriesError("Something went wrong. Please try again.");
+            cb.gotCategoriesError("Something went wrong. Please try again.");
         }
     }
 }

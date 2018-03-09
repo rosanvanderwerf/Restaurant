@@ -20,8 +20,6 @@ import java.util.ArrayList;
 
 public class MenuItemsRequest implements Response.Listener<JSONObject>, Response.ErrorListener{
 
-
-
     public interface Callback {
         void gotMenuItems(ArrayList<MenuItem> items);
         void gotMenuItemsError(String message);
@@ -29,7 +27,6 @@ public class MenuItemsRequest implements Response.Listener<JSONObject>, Response
 
     public Context context;
     public Callback cb;
-
 
     /* Constructor */
     MenuItemsRequest(Context c){
@@ -44,13 +41,12 @@ public class MenuItemsRequest implements Response.Listener<JSONObject>, Response
         queue.add(request);
 
         /* Callback: to notify activity that retrieval successful */
-        // Something gotCategories, or gotCategoriesError
         cb = activity;
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
-
+        cb.gotMenuItemsError("Something went wrong. Please try again.");
     }
 
     @Override
@@ -83,7 +79,7 @@ public class MenuItemsRequest implements Response.Listener<JSONObject>, Response
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            //callback.gotCategoriesError("Something went wrong. Please try again.");
+            cb.gotMenuItemsError("Something went wrong. Please try again.");
         }
 
     }
